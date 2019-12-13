@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.9.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.2.0"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+<ul class="topnav">
+  <h2><li><a class="active" href="test2.html">San Franciso Bay Water Quality Measurements</a></li></h2>
+</ul>
+    <div id="vis"></div>
+
+    <script type="text/javascript">
+      var yourVlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {"url": "convertcsv.json"},
+  "transform": [{
+    "window": [{"op": "row_number", "as": "row_number"}]
+  }],
+  "hconcat": [{
+    "selection": {
+      "brush": {
+        "type": "interval"
+      }
+    },
+    "mark": "bar",
+    "encoding": {
+      "x": {"timeUnit": "month","field": "Date", "type": "ordinal"},
+      "y": {
+        
+      "field": "Discrete Oxygen",
+      "type": "quantitative"}
+      
+    }
+  }, {
+    "transform": [
+      {"filter": {"selection": "brush"}},
+      {"window": [{"op": "rank", "as": "rank"}]},
+      {"filter": {"field": "rank", "lt": 20}}
+    ],
+    "hconcat": [{
+      "width": 50,
+      "title": "Discrete Oxygen",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Discrete Oxygen", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }
+    },
+    {
+      "width": 50,
+      "title": "Temperature",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Temperature", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }
+    }, {
+      "width": 50,
+      "title": "Depth",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Depth", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }
+    }, {
+      "width": 50,
+      "title": "Silicate",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Silicate", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }}, {
+      "width": 50,
+      "title": "Phosphate",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Phosphate", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }}, {
+      "width": 50,
+      "title": "Nitrite",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Nitrite", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }}, {
+      "width": 50,
+      "title": "Nitrate + Nitrite",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Nitrate + Nitrite", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }}, {
+      "width": 50,
+      "title": "Ammonium",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Ammonium", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }
+    }]
+  }],
+  "resolve": {
+    "legend": {
+      "color": "independent"
+    }
+  }
+}
+
+ vegaEmbed('#vis', yourVlSpec);
+    </script>
+
+
+  </body>
+</html>
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.9.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.2.0"></script>
+    <link rel="stylesheet" href="style.css">
+   
+  </head>
+  <body >
+    <ul class="topnav">
+  <h2><li><a class="active" href="test2.html">San Franciso Bay Water Quality Measurements</a></li></h2>
+</ul>
+    <div id="vis"></div>
+
+
+
+    <script type="text/javascript">
+      var yourVlSpec = {
+  "data": {"url": "convertcsv.json"},
+  "transform": [{"calculate": "month(datum.Date)", "as": "Month"}],
+  "repeat": ["Silicate", "Discrete Oxygen", "Phosphate", "Nitrite", "Nitrate + Nitrite", "Ammonium"],
+  "columns": 3, 
+  "spec": {
+  "layer": [{
+    "selection": {
+      "View": {
+        "type": "single", "fields": ["Month"],
+        "init": {"Month": 1},
+        "bind": {
+          "Month": {"input": "range", "min": 1, "max": 12, "step": 1}
+        }
+      }
+    },
+
+    "mark": "point",
+    "encoding": {
+      "x": {"timeUnit":"year", "field": "Date", "type": "ordinal"},
+      "y": {"field": {"repeat": "repeat"}, "type": "quantitative"},
+      "color": {
+        "condition": {"selection": "View", "field": "Origin", "type": "nominal"},
+        "value": "white"
+      }
+    }
+  }, {
+    "transform": [{"filter": {"selection": "View"}}],
+    "mark": "point",
+    "encoding": {
+      "x": {"timeUnit":"year", "field": "Date", "type": "ordinal"},
+      "y": {"field": {"repeat": "repeat"}, "type": "quantitative"},
+      "color": {"field": "Origin", "type": "nominal"},
+      "size": {"value": 100}
+    }
+  }]}
+}
+      vegaEmbed('#vis', yourVlSpec);
+    </script>
+    </div>
+  <div style="float:left">
+  <h4>Choose to compare:</h4>
+  <a href="silicate.html">  Silicate  </a></br>
+  <a href="Dis_Oxy.html">  Discrete Oxygen  </a></br>
+  <a href="phosphate.html">  Phosphate  </a></br>
+  <a href="nitrite.html">  Nitrite  </a></br>
+  <a href="nn.html">  Nitrate+Nitrite  </a></br>
+  <a href="ammonium.html">  Ammonium  </a>
+  
+</div>
+<div style="float:right">
+  <h4>Choose to compare:</h4>
+  <a href="test1.html">  Ammonium and Phosphate </a>
+  
+</div>
+
+
+  </body>
+</html>

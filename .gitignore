@@ -1,0 +1,15 @@
+.DS_Store
+.eslintignore
+.eslintrc.js
+.prettierignore
+.rpt2_cache
+beemo-error.log
+bower_components
+build
+node_modules
+npm-debug.log*
+package-lock.json
+prettier.config.js
+src/style.ts
+yarn-debug.log*
+yarn-error.log*

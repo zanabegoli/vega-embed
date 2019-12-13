@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.9.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.2.0"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+ <ul class="topnav">
+  <h2><li><a class="active" href="test2.html">San Franciso Bay Water Quality Measurements</a></li></h2>
+</ul>
+    <div id="vis"></div>
+
+    <script type="text/javascript">
+      var yourVlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "width": 1100,
+  "height": 300,
+  "padding": 5,
+  "autosize": {"type": "fit", "resize": true, "contains": "padding"},
+  "data": {"name": "Measurements", "url": "convertcsv.json"},
+  "selection": {
+    "org": {
+      "type": "single",
+      "fields": ["Nitrite"],
+
+    }
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "timeUnit": "month",
+
+      "field": "Date",
+      "type":"temporal",
+      },
+
+    "y": {"aggregate": "mean",
+      "field": "Nitrite",
+      "type": "quantitative"},
+
+      "color": {
+       "condition": {
+        "selection": "org",
+        "aggregate": "mean",
+        "field": "Nitrite",
+        "type": "ordinal"
+      },
+      "value": "grey"
+    }
+  }
+}
+      vegaEmbed('#vis', yourVlSpec);
+    </script>
+  </body>
+</html>
